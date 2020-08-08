@@ -1,0 +1,178 @@
+﻿@model LiteCommerce.Admin.Models.OrderDetailResult
+@{
+    int i = 0;
+    double total = 0;
+    double tt;
+}
+
+<div class="box box-primary">
+    <div class="box-body">
+        <div class="box-header text-right">
+            <a href="~/Order">Back to List</a>
+        </div>
+        <div class="row" style="padding-top:20px; padding-bottom:30px; padding-left:40px">
+            <div class="col-sm-4">
+                <div class="row" style="margin-bottom:10px">
+                    <div class="col-sm-3">
+                        <b>Order ID:</b>
+                    </div>
+                    <div class="col-sm-9">
+                        @Model.order.OrderId
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom:10px">
+                    <div class="col-sm-3">
+                        <b>Freigth:</b>
+                    </div>
+                    <div class="col-sm-9">
+                        @Model.order.Freight
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom:10px">
+                    <div class="col-sm-3" style="padding-right:0">
+                        <b>Ship Address:</b>
+                    </div>
+                    <div class="col-sm-9">
+                        @Model.order.ShipAddress <br />
+                        @string.Format("{0} - {1}", Model.order.ShipCity, Model.order.ShipCountry)
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="row" style="margin-bottom:10px">
+                    <div class="col-sm-3">
+                        <b>Customer:</b>
+                    </div>
+                    <div class="col-sm-9">
+                        @foreach (var customer in SelectListHelper.Customer())
+                        {
+                            if (Convert.ToString(Model.order.CustomerID) == customer.Value)
+                            {
+                                @customer.Text;
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom:10px">
+                    <div class="col-sm-3">
+                        <b>Employee:</b>
+                    </div>
+                    <div class="col-sm-9">
+                        @foreach (var employee in SelectListHelper.Employee())
+                        {
+                            if (Model.order.EmployeeID == Convert.ToInt32(employee.Value))
+                            {
+                                @employee.Text;
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom:10px">
+                    <div class="col-sm-3" style="padding-right:0">
+                        <b>Shipper:</b>
+                    </div>
+                    <div class="col-sm-9">
+                        @foreach (var shipper in SelectListHelper.Shippers())
+                        {
+                            if (Model.order.ShipperID == Convert.ToInt32(shipper.Value))
+                            {
+                                @shipper.Text;
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="row" style="margin-bottom:10px">
+                    <div class="col-sm-4">
+                        <b>Order Date:</b>
+                    </div>
+                    <div class="col-sm-8">
+                        @Model.order.OrderDate
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom:10px">
+                    <div class="col-sm-4">
+                        <b>Required Date:</b>
+                    </div>
+                    <div class="col-sm-8">
+                        @Model.order.RequiredDate
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom:10px">
+                    <div class="col-sm-4">
+                        <b>Shipped Date:</b>
+                    </div>
+                    <div class="col-sm-8">
+                        @Model.order.ShippedDate
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th style="width:50px">#</th>
+                    <th style="width:auto">Product</th>
+                    <th style="width:150px">Unit Price</th>
+                    <th style="width:150px">Quantity</th>
+                    <th style="width:100px">Discount</th>
+                    <th style="width:100px"></th>
+                    @*<th style="width:60px"></th>*@
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var detail in Model.data)
+                {
+                    <tr>
+                            <input class="checkbox__item" type="hidden" name="productIDs" value="@detail.OrderID,@detail.ProductID" />
+                        <td>@(++i)</td>
+                        <td>
+                            <span style="color:#0094ff; font-weight:bold; display:block">
+                                @foreach (var product in SelectListHelper.Products())
+                                {
+                                    if (detail.ProductID == Convert.ToInt32(product.Value))
+                                    {
+                                        @product.Text
+                                    }
+                                }
+                            </span>
+                        </td>
+                        <td>
+                            @detail.UnitPrice
+                        </td>
+                        <td>
+                            @detail.Quantity
+                        </td>
+                        <td>
+                            @string.Format("{0:0.##}", detail.Discount)
+                        </td>
+                        <td>
+                            @{
+                                tt = detail.UnitPrice * detail.Quantity * (1 - detail.Discount);
+                                total += tt;
+                            }
+                            @string.Format("{0:0,0.##}", tt)
+                        </td>
+                        @*<td class="text-right">
+                                <p>
+                                    <a class="btn btn-sm btn-default" title="Edit Order" href="~/Order/Input/@detail.OrderID/">
+                                        <i style="width:12px" class="fa fa-edit"></i>
+                                    </a>
+                                </p>
+                            </td>*@
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr style="font-weight:bold; color:red">
+                    <td></td>
+                    <td colspan="4" style="text-decoration:underline">ToTal:</td>
+                    <td>@string.Format("{0:0,0.##}", total)</td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+
+    </div>
+</div>

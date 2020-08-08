@@ -1,0 +1,6 @@
+C:\Users\USER\source\repos\LiteCommerce\LiteCommerce.DomainModels\bin\Debug\LiteCommerce.DomainModels.dll
+C:\Users\USER\source\repos\LiteCommerce\LiteCommerce.DomainModels\bin\Debug\LiteCommerce.DomainModels.pdb
+C:\Users\USER\source\repos\LiteCommerce\LiteCommerce.DomainModels\obj\Debug\LiteCommerce.DomainModels.csprojAssemblyReference.cache
+C:\Users\USER\source\repos\LiteCommerce\LiteCommerce.DomainModels\obj\Debug\LiteCommerce.DomainModels.csproj.CoreCompileInputs.cache
+C:\Users\USER\source\repos\LiteCommerce\LiteCommerce.DomainModels\obj\Debug\LiteCommerce.DomainModels.dll
+C:\Users\USER\source\repos\LiteCommerce\LiteCommerce.DomainModels\obj\Debug\LiteCommerce.DomainModels.pdb

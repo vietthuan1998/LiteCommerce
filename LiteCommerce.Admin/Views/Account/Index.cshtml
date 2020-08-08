@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewBag.Title = "Account Information";
+    var userData = User.GetUserData();
+
+}
+
+<div class="box box-primary">
+    <div class="box-body">
+
+        <div class="col-sm-9">
+            <div class="row form-group">
+                <label class="control-label col-sm-2">UserID:</label>
+                <div class="col-sm-7">
+                    <p class="form-control-static text-left">@userData.UserID</p>
+                </div>
+            </div>
+            <div class="row form-group">
+                <label class="control-label col-sm-2">FullName:</label>
+                <div class="col-sm-7">
+                    <p class="form-control-static text-left">@userData.FullName</p>
+                </div>
+            </div>
+            <div class="row form-group">
+                <label class="control-label col-sm-2">Title:</label>
+                <div class="col-sm-7">
+                    <p class="form-control-static text-left">@userData.Title</p>
+                </div>
+            </div>
+            <div class="row form-group">
+                <label class="control-label col-sm-2">Roles:</label>
+                <div class="col-sm-7">
+                    <p class="form-control-static text-left">@userData.GroupName</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            @if (string.IsNullOrEmpty(userData.Photo))
+            {
+                <img class="img-thumbnail" style="width:185px" src="~/Images/Uploads/noimage.png" />
+            }
+            else
+            {
+                <img class="img-thumbnail" style="width:185px" src="~/Images/Uploads/@userData.Photo" />
+            }
+        </div>
+    </div>
+</div>
+

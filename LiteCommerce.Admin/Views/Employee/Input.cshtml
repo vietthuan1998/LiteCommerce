@@ -1,0 +1,143 @@
+﻿@model LiteCommerce.DomainModels.Employee
+@{
+
+}
+<div class="box box-primary">
+    <form role="form" action="~/Employee/Input" method="post" enctype="multipart/form-data">
+        <div class="box-header text-right">
+            <a href="~/Employee">Back to List</a>
+        </div>
+        <div style="color: red; font-weight: bold">@Html.ValidationSummary()</div>
+        <div class="box-body">
+            <input type="hidden" name="EmployeeID" value="@Model.EmployeeID">
+            <div class="row">
+                <div class="col-sm-9">
+                    <div class="form-group row">
+                        <div class="col-sm-6">
+                            <label>First Name:</label>
+                            <input type="text" class="form-control" placeholder="First Name" value="@Model.FirstName" name="FirstName">
+                        </div>
+                        <div class="col-sm-6">
+                            <label>Last Name:</label>
+                            <input type="text" class="form-control" placeholder="Last Name" value="@Model.LastName" name="LastName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Title:</label>
+                        <input type="text" class="form-control" placeholder="Ex: Sale Manager" value="@Model.Title" name="Title">
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-6">
+                            <label>Birth Date:</label>
+                            <input type="datetime" class="form-control" placeholder="Birth Date" value="@string.Format("{0:dd/MM/yyyy}", Model.BirthDate)" name="BirthDate">
+                        </div>
+                        <div class="col-sm-6">
+                            <label>Hire Date:</label>
+                            <input type="datetime" class="form-control" placeholder="Hire Date" value="@string.Format("{0:dd/MM/yyyy}", Model.HireDate)" name="HireDate">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Address:</label>
+                        <input type="text" class="form-control" placeholder="Address" value="@Model.Address" name="Address">
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="text-center">
+                                @{
+                                    if (string.IsNullOrEmpty(Model.PhotoPath))
+                                    {
+                                        <img style="object-fit:cover; width:245px;" id="showThumb" class="img-thumbnail" src="~/Images/uploads/avatar.png">
+                                    }
+                                    else
+                                    {
+                                        <img style="object-fit:cover; width:245px;" id="showThumb" class="img-thumbnail" src="~/Images/uploads/@Model.PhotoPath">
+                                    }
+                                }
+                                @*<img style="object-fit:cover; width:165px; height:208px;" id="showThumb" class="img-thumbnail" src="~/Images/uploads/@Model.PhotoPath">*@
+                            </div>
+                            <label>Photo Path: @Model.PhotoPath</label>
+                            <input type="file" id="my_input_file" name="uploadFile" accept=".png, .jpg">
+                            <input type="hidden" name="PhotoPath" value="@Model.PhotoPath" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-6">
+                    <label>Country:</label>
+                    <select class="form-control" name="Country">
+                        @foreach (var country in SelectListHelper.Countries())
+                        {
+                            if (Model.Country == country.Value)
+                            {
+                                <option value="@country.Value" selected>@country.Text</option>
+                            }
+                            else
+                            {
+                                <option value="@country.Value">@country.Text</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="col-sm-6">
+                    <label>City:</label>
+                    <input type="text" class="form-control" placeholder="Ex: New Orleans" value="@Model.City" name="City">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-6">
+                    <label>Home Phone:</label>
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="fa fa-phone"></i>
+                        </div>
+                        <input type="text" class="form-control" value="@Model.HomePhone" name="HomePhone">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label>Email:</label>
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="fa fa-home"></i>
+                        </div>
+                        <input type="text" class="form-control" value="@Model.Email" name="Email">
+                    </div>
+                </div>
+            </div>
+            @if (string.IsNullOrEmpty(Model.Password))
+            {
+                <div class="form-group">
+                    <label>Password:</label>
+                    <input type="password" class="form-control" placeholder="Password" name="Password">
+                </div>
+            }
+            else
+            {
+                <input type="hidden" name="Password" value="@Model.Password" />
+            }
+            <div class="form-group">
+                <label>Roles:</label>
+                <input type="text" class="form-control" placeholder="Roles" name="Roles" value="@Model.Roles" />
+            </div>
+            <div class="form-group">
+                <div class="form-group">
+                    <label>Notes:</label>
+                    <textarea rows="5" class="form-control" name="Notes">@Model.Notes</textarea>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+            <button type="submit" class="btn btn-sm btn-primary">
+                <i class="fa fa-save"></i> Save
+            </button>
+            <a class="btn btn-sm btn-default" href="~/Employee">
+                Cancel
+            </a>
+        </div>
+    </form>
+</div>

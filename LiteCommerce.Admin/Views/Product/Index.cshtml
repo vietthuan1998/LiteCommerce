@@ -1,0 +1,121 @@
+﻿@model LiteCommerce.Admin.Models.ProductPaginationResult
+@{
+    ViewBag.Title = "Manage Products";
+    int i = 0;
+}
+<div class="box box-primary">
+    <form role="form" action="~/Product" method="get">
+        <div class="box-body">
+            <div class="input-group input-group-sm">
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(m => m.SearchValue, 
+                                        new { @class = "form-control",
+                                            @placeholder = "Input search value..." })
+                    @*<input type="text" class="form-control" placeholder="Input search value...">*@
+                </div>
+                <div class="col-sm-4">
+
+                    @Html.DropDownListFor(m => m.Category,
+                                                SelectListHelper.Categories(),
+                                                new { @class = "form-control"})
+                    @*<select class="form-control">
+                        <option value="">-- Choose Categories --</option>
+                        <option value="Beverages">Beverages</option>
+                        <option value="Condiments">Condiments</option>
+                    </select>*@
+                </div>
+                <div class="col-sm-4">
+                    @Html.DropDownListFor(m => m.Supplier,
+                                                SelectListHelper.Suppliers(),
+                                                new { @class = "form-control" })
+                    @*<select class="form-control">
+                        <option value="">-- Choose Suppliers --</option>
+                        <option value="Exotic Liquids">Exotic Liquids</option>
+                        <option value="Escargots Nouveaux">Escargots Nouveaux</option>
+                    </select>*@
+                </div>
+                <span class="input-group-btn">
+                    <button type="submit" class="btn btn-primary btn-flat">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
+            </div>
+        </div>
+    </form>
+</div>
+<form role="form" action="~/Product/Delete" method="post">
+    <div class="container-fluid row" style="margin-bottom:10px;">
+        <div class="col-sm-8">
+            There are <b>@Model.RowCount</b> Products. Page @string.Format("{0}/{1}", Model.Page, Model.PageCount)
+        </div>
+        <div class="col-md-4 text-right">
+            <div class="btn-group">
+                <a href="~/Product/Input" class="btn btn-sm btn-primary">Add Product</a>
+                <button type="submit" class="btn btn-sm btn-danger">Delete Product</button>
+            </div>
+        </div>
+    </div>
+    <div class="box box-success">
+        <div class="box-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th style="width:30px">
+                            <input type="checkbox" id="selectall"/>
+                        </th>
+                        <th style="width:50px">#</th>
+                        <th style="width:auto">Product Name</th>
+                        <th style="width:80px"></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var product in Model.Data)
+                    {
+
+                    <tr>
+                        <td>
+                            <input class="checkbox__item" type="checkbox" name="productIDs" value="@product.ProductID" />
+                        </td>
+                        <td>@(++i)</td>
+                        <td>
+                            
+                            <span style="color:#646464;font-weight:bold">
+                                @product.ProductName
+                            </span>
+                        </td>
+                        <td class="text-right">
+                            <a class="btn btn-sm btn-default" href="~/Product/Input/@product.ProductID/">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    }
+
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="box-footer clearfix text-center">
+            <ul class="pagination pagination-sm no-margin pull-right">
+                <li><a href="~/Product?page=1&searchValue=@Model.SearchValue&Category=@Model.Category&Supplier=@Model.Supplier">«</a></li>
+                @for (int page = 1; page <= Model.PageCount; page++)
+                {
+                    if (page == Model.Page)
+                    {
+                        <li class="active"><a>@page</a></li>
+                    }
+                    else
+                    {
+                        <li><a href="~/Product?page=@page&searchValue=@Model.SearchValue&Category=@Model.Category&Supplier=@Model.Supplier">@page</a></li>
+                    }
+
+                }
+                <li><a href="~/Product?page=@Model.PageCount&searchValue=@Model.SearchValue&Category=@Model.Category&Supplier=@Model.Supplier">»</a></li>
+            </ul>
+        </div>
+    </div>
+</form>
+
+

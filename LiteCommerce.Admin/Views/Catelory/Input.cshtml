@@ -1,0 +1,48 @@
+﻿@model LiteCommerce.DomainModels.Category
+@{
+    // ViewBag.Title = "Input";
+}
+
+<div class="container pt-4">
+    <div class="row">
+        <div class="col-md-6">
+            <!-- general form elements -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <!--<h3 class="box-title">Insert Category</h3>-->
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                <form role="form" action="~/Catelory/Input" method="post">
+
+                    <div class="box-header text-right">
+                        <a href="~/Catelory">Back to List</a>
+                    </div>
+                    <div class="box-body">
+                        <input type="hidden" name="CategoryID" value="@Model.CategoryID" />
+                        <div class="form-group">
+                            <label>Category Name</label>
+                            <input type="text" class="form-control" placeholder="Category Name" value="@Model.CategoryName" name="CategoryName">
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <input type="text" class="form-control" placeholder="Description" value="@Model.Description" name="Description">
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-sm btn-primary">
+                            <i class="fa fa-save"></i> Save
+                        </button>
+                        <a class="btn btn-sm btn-default" href="~/Catelory">
+                            Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
